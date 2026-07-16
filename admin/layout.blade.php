@@ -1,0 +1,1 @@
+<?php if($blueprint->dbGet("skatheme", "ska_tracking") == 1) { echo('<script defer="" data-domain="demo.skathemes.github.io" src="https://plausible.github.com/sdgamer8263-sketch/js/script.js"></script>'); } ?>

@@ -1,0 +1,25 @@
+info:
+  name: 'SKA Theme'
+  identifier: 'skatheme'
+  description: 'Deep-space neon theme — Copyright © SKA'
+  flags: 'developerKeepApplicationCache, developerEscalateExportScript, developerEscalateInstallScript'
+  version: '1.0.0'
+  target: 'beta-2026-01'
+  author: 'SKA'
+  icon: 'skatheme.jpg'
+  website: 'https://skathemes.github.io'
+
+admin:
+  view: 'admin/view.blade.php'
+  controller: 'admin/controller.php'
+  wrapper: 'admin/layout.blade.php'
+
+dashboard:
+  wrapper: 'client/wrapper.blade.php'
+
+data:
+  directory: 'private'
+  public: 'public'
+
+requests:
+  views: 'src/views'
