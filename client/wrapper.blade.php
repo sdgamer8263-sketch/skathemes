@@ -1,5 +1,5 @@
 <?php
-  $nebula_data = $blueprint->dbGetMany('nebula', [
+  $nebula_data = $blueprint->dbGetMany('skatheme', [
     'sidebar_home',
     'sidebar_admin',
     'sidebar_account',
@@ -204,42 +204,7 @@
 
 @if(Auth::check())
 @if($s_watermark == "1")
-<p class="nebulaFooter"><i style="font-size:12px; margin-right: 3px;" class="bi bi-stars"></i> <a href="https://skathemes.github.io?utm_source=inlinenebula&utm_campaign=footer" target="_blank">Nebula theme</a> by <a href="https://github.com/sdgamer8263-sketch?utm_source=inlinenebula&utm_campaign=footer" target="_blank">Emma (github.com/sdgamer8263-sketch)</a></p>
-@endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
+<p class="nebulaFooter"><i style="font-size:12px; margin-right: 3px;" class="bi bi-exclude"></i> <a href="https://github.com/sdgamer8263-sketch/skathemes?utm_source=inlineskatheme&utm_campaign=footer" target="_blank">Nebula theme</a> by <a href="https://prpl.wtf?utm_source=inlineskatheme&utm_campaign=footer" target="_blank">Emma (prpl.wtf)</a></p>
 @endif
 <div
   <?php
@@ -258,7 +223,7 @@
       // BOOTSTRAP
       $__SCALE = "30px";
       $__WIDE_TOPMARGIN = "unset";
-      $__home             = "bi bi-stars";
+      $__home             = "bi bi-exclude";
       $__admin            = "bi bi-gear-wide-connected";
       $__account          = "bi bi-person-fill-gear";
       $__logout           = "bi bi-box-arrow-right";
@@ -670,41 +635,6 @@
 @include('blueprint.extensions.skatheme.wrapper.contextmenu.sidebar')
 
 @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
 <style id="ska-components">
 
   #skaContextMenu,
@@ -731,41 +661,6 @@
       display: none
     }
   @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
 
   /* Sidebar */
   @if($s_sidebar_background == "default")
@@ -797,41 +692,6 @@
     border-radius: 0px;
   }
   @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
 
   .sidebarContentContainer {
     margin: 0px 0px 10px 10px;
@@ -885,41 +745,6 @@
     @elseif($s_sidebar_background == "blurred")
       background-color: transparent;
     @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
     width: calc(75px - 10px - 10px);
     height: calc(75px - 10px - 10px);
     border-radius: var(--borderRadiusSidebar);
@@ -944,41 +769,6 @@
     @elseif($s_sidebar_background == "blurred")
       background-color: #ffffff20;
     @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
   }
   .sidebarButton:active {
     @if($s_sidebar_background == "default")
@@ -986,41 +776,6 @@
     @elseif($s_sidebar_background == "blurred")
       background-color: #ffffff15;
     @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
   }
 
   .sidebarButtonSelected {
@@ -1030,41 +785,6 @@
       background-color: color-mix(in hsl, var(--sidebarButtonActive) 50%, transparent);
       --border: 1px solid rgba(255, 255, 255, 0.2) !important;
     @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
   }
 
   .sidebarIcon {
@@ -1076,41 +796,6 @@
     @if(Auth::check())
       font-size: calc({{ $__SCALE }} * {{ $s_icon_scale }});
     @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
   }
   .sidebarIcon:hover {
     color: var(--sidebarPrimaryHover);
@@ -1121,41 +806,6 @@
     height: 100%;
     scale: calc({{ $s_icon_scale }});
     @if($s_icon_scale == "1.00")border-radius: var(--borderRadiusSidebar);@endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
   }
 
   @if($s_sidebar_separators == "1")
@@ -1167,41 +817,6 @@
       border-top: 1px solid var(--sidebarSecondary);
     }
   @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
 
   .sidebarCategory {
     display: none;
@@ -1233,41 +848,6 @@
           color: #fff;
         }
       @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
     @else
       body, body.bg-neutral-800 {
         padding-left: 75px;
@@ -1275,82 +855,12 @@
         background-color: #00000000;
       }
     @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
   @else
     body, bg-neutral-800 {
       color: #fff;
       background-color: var(--pageBackground);
     }
   @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
 
   html:not([multitasking]) {
     background-color: var(--pageBackground) !important;
@@ -1362,77 +872,7 @@
     .fixed-background {
       background: url("{{ $s_background_image }}") no-repeat;
       @if($s_background_appearance == "1")filter: blur(40px);scale: 1.1;@endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
       @if($s_background_appearance == "2")opacity: 0.6;@endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
       z-index: -1;
       background-position: center;
       background-size: cover;
@@ -1446,41 +886,6 @@
       z-index: 2;
     }
   @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
 
   @if($s_sidebar_full == "1" && Auth::check())
     /*
@@ -1549,41 +954,6 @@
         margin-bottom: 10px;
       }
     @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
     @if($s_sidebar_buttonstyle == "1")
       .sidebarButton {
         border-left: 0px solid transparent;
@@ -1592,41 +962,6 @@
         @if($s_sidebar_background == "default")
           background-color: var(--sidebarSecondary);
         @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
         border-left: 10px solid var(--sidebarButtonActive) !important;
         transition: border .2s, border-left .2s;
       }
@@ -1647,118 +982,13 @@
         @if($s_sidebar_background == "default")
           background-color: var(--sidebarSecondary);
         @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
         --border: 3px solid var(--sidebarButtonActive);
         border-left: 3px solid var(--sidebarButtonActive) !important;
         border: 3px solid var(--sidebarButtonActive) !important;
         transition: border .2s, border-left .2s;
       }
     @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
   @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
 
   @media screen and (min-width: 760px) {
     /* Sidebar hover animations */
@@ -1774,41 +1004,6 @@
         height: calc(75px - 10px - 10px + 20px);
       }
     @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
   }
 </style>
 @include('blueprint.extensions.skatheme.wrapper.sidebar.mobile')
@@ -1817,78 +1012,8 @@
   @include('blueprint.extensions.skatheme.wrapper.script')
   @include('blueprint.extensions.skatheme.wrapper.animations')
 @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
 @include('blueprint.extensions.skatheme.wrapper.theme.auth')
 @include('blueprint.extensions.skatheme.wrapper.theme.panel')
-@endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
 @endif
 @include('blueprint.extensions.skatheme.wrapper.initialize.index')
 @if($s_init == "{version}")
@@ -1904,43 +1029,8 @@
   ></div>
   <div class="ska-auth-backdrop"></div>
   @if($s_watermark_auth != "0")
-    <div class="ska-watermark"><a href="https://skathemes.github.io?utm_source=inlinenebula&utm_campaign=footer"><b class="watermark-highlight"><i class="bi bi-stars"></i> Nebula</b> theme</a> by <a class="ska-watermark-text" href="https://github.com/sdgamer8263-sketch?utm_source=inlinenebula&utm_campaign=footer" target="_blank">Emma (github.com/sdgamer8263-sketch)</a></div>
+    <div class="ska-watermark"><a href="https://github.com/sdgamer8263-sketch/skathemes?utm_source=inlineskatheme&utm_campaign=footer"><b class="watermark-highlight"><i class="bi bi-exclude"></i> Nebula</b> theme</a> by <a class="ska-watermark-text" href="https://prpl.wtf?utm_source=inlineskatheme&utm_campaign=footer" target="_blank">Emma (prpl.wtf)</a></div>
   @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
   <style>.g-recaptcha {display: none !important;}</style>
   @if($blueprint->dbGet("settings", "recaptcha:enabled") == "true")
     <div class="notification">
@@ -1952,116 +1042,12 @@
       </div>
     </div>
   @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
-@endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
 @endif
 @if(Auth::check())
   @include('blueprint.extensions.skatheme.wrapper.file-switch')
 @if($s_keyboard_shortcuts == "1")
   @include('blueprint.extensions.skatheme.wrapper.keybinds.index')
 @endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
 @endif
 @endif
 
@@ -2078,8 +1064,9 @@
     padding: 4px 0 6px;
     pointer-events: none;
     user-select: none;
+    background: linear-gradient(to top, rgba(6,6,19,0.7) 0%, transparent 100%);
   }
-  #ska-footer-bar span {
+  #ska-footer-bar span.ska-copyright {
     font-size: 10.5px;
     font-weight: 600;
     letter-spacing: 0.08em;
@@ -2091,47 +1078,13 @@
     font-size: 9.5px;
     font-weight: 400;
     color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
+    letter-spacing: 0.05em;
   }
 </style>
 <div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
-</div>
-@endif
-@endif
-
-{{-- ═══ SKA FOOTER — HARDCODED — DO NOT REMOVE ═══ --}}
-@if(Auth::check())
-<style>
-  #ska-footer-bar {
-    position: fixed;
-    bottom: 0; left: 70px; right: 0;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4px 0 6px;
-    pointer-events: none;
-    user-select: none;
-  }
-  #ska-footer-bar span {
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(168, 85, 247, 0.75);
-    text-shadow: 0 0 8px rgba(168,85,247,0.4);
-    line-height: 1.5;
-  }
-  #ska-footer-bar span.ska-designby {
-    font-size: 9.5px;
-    font-weight: 400;
-    color: rgba(148, 154, 190, 0.45);
-    text-shadow: none;
-  }
-</style>
-<div id="ska-footer-bar">
-  <span>Copyright &copy;&ufe0f; SKA</span>
-  <?php if(config("ska.design_by", "Design by SKA") != "") { echo('<span class="ska-designby">' . htmlspecialchars(config("ska.design_by", "Design by SKA")) . '</span>'); } ?>
+  <span class="ska-copyright">Copyright &#169;&#65039; SKA</span>
+  @if(env('SKA_DESIGN_BY', 'Design by SKA') != '')
+    <span class="ska-designby">{{ env('SKA_DESIGN_BY', 'Design by SKA') }}</span>
+  @endif
 </div>
 @endif
