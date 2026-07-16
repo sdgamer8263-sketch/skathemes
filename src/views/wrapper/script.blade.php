@@ -1,5 +1,5 @@
 <script>
-  console.log("nebula#~ wrapper.blade.php")
+  
 
   setTimeout(() => {
     console.debug("%c"+

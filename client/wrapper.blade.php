@@ -1,5 +1,5 @@
 <?php
-  $nebula_data = $blueprint->dbGetMany('skatheme', [
+  $skatheme_data = $blueprint->dbGetMany('skatheme', [
     'sidebar_home',
     'sidebar_admin',
     'sidebar_account',
