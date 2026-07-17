@@ -48,6 +48,42 @@
 
     --patternSizeAuth: {{ $s_auth_background_magicsize }}px;
     --patternSizeDashboard: {{ $s_background_magicsize }}px;
+
+    /* ── Arix: font & glass ── */
+    --ska-font: '{{ $s_font_family }}', system-ui, -apple-system, sans-serif;
+    <?php
+      $__glass = '0';
+      if($s_glass_intensity == '1') { $__glass = '0.7'; }
+      elseif($s_glass_intensity == '2') { $__glass = '0.5'; }
+      elseif($s_glass_intensity == '3') { $__glass = '0.25'; }
+      $__blur = '0px';
+      if($s_glass_intensity == '1') { $__blur = '8px'; }
+      elseif($s_glass_intensity == '2') { $__blur = '16px'; }
+      elseif($s_glass_intensity == '3') { $__blur = '24px'; }
+    ?>
+    --ska-glass-alpha: {{ $__glass }};
+    --ska-glass-blur: {{ $__blur }};
   }
+
+  /* ── Font ── */
+  @if($s_font_family && $s_font_family !== 'system')
+  * { font-family: var(--ska-font) !important; }
+  @endif
+
+  /* ── Light mode override ── */
+  @if($s_dark_mode === 'light')
+  :root {
+    --pageBackground: #f1f5f9;
+    --pagePrimary: #1e293b;
+    --pagePrimaryHover: #334155;
+    --pageSecondary: #e2e8f0cc;
+    --pageSecondaryHover: #cbdaeccc;
+    --pageSecondaryActive: #c8d9eacc;
+    --pageSecondarySelected: #bfcfe0cc;
+    --sidebarBackground: #1e1b4b;
+    --sidebarPrimary: #c4b5fd;
+    --sidebarSecondary: #2d2b6b;
+  }
+  @endif
 
 </style>

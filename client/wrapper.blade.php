@@ -96,6 +96,12 @@
     'sidebar_hover',
     'animations',
     'sidebar_separators',
+    'font_family',
+    'custom_css',
+    'glass_intensity',
+    'server_card_style',
+    'dark_mode',
+    'content_background',
   ]);
   $s_sidebar_home = $skatheme_data['sidebar_home'];
   $s_sidebar_admin = $skatheme_data['sidebar_admin'];
@@ -193,6 +199,12 @@
   $s_sidebar_hover = $skatheme_data['sidebar_hover'];
   $s_animations = $skatheme_data['animations'];
   $s_sidebar_separators = $skatheme_data['sidebar_separators'];
+  $s_font_family        = $skatheme_data['font_family'] ?? 'Inter';
+  $s_custom_css         = $skatheme_data['custom_css'] ?? '';
+  $s_glass_intensity    = $skatheme_data['glass_intensity'] ?? '0';
+  $s_server_card_style  = $skatheme_data['server_card_style'] ?? 'default';
+  $s_dark_mode          = $skatheme_data['dark_mode'] ?? 'dark';
+  $s_content_background = $skatheme_data['content_background'] ?? '';
 ?>
 @include('blueprint.extensions.skatheme.wrapper.import')
 

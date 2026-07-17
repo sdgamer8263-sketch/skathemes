@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SKA Theme Editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#060613;--bg2:#0d0d26;--bg3:#141430;--border:rgba(168,85,247,.2);--accent:#a855f7;--accent2:#22d3ee;--text:#e2e8f0;--text2:rgba(226,232,240,.6);--radius:8px}
+html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:13px}
+
+/* ── Header ── */
+#hdr{display:flex;align-items:center;gap:12px;height:52px;padding:0 16px;background:var(--bg2);border-bottom:1px solid var(--border);position:fixed;top:0;left:0;right:0;z-index:100}
+#logo{font-weight:700;font-size:14px;color:var(--accent);white-space:nowrap;margin-right:8px}
+#logo small{font-size:10px;color:var(--text2);font-weight:400}
+#tabs{display:flex;gap:2px;flex:1;overflow-x:auto}
+.tab{padding:6px 14px;background:none;border:none;border-radius:6px;color:var(--text2);cursor:pointer;font-size:12px;font-weight:500;white-space:nowrap;transition:.15s}
+.tab:hover{background:rgba(168,85,247,.1);color:var(--text)}
+.tab.active{background:rgba(168,85,247,.2);color:var(--accent)}
+#actions{display:flex;align-items:center;gap:8px;white-space:nowrap}
+#status{font-size:11px;color:var(--text2);transition:.3s}
+#status.ok{color:#4ade80}
+#status.err{color:#f87171}
+.btn{padding:6px 16px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600;transition:.15s}
+#save-btn{background:linear-gradient(135deg,var(--accent),#7c3aed);color:#fff}
+#save-btn:hover{opacity:.9}
+#save-btn:disabled{opacity:.5;cursor:not-allowed}
+#pv-toggle{background:rgba(34,211,238,.1);color:var(--accent2);border:1px solid rgba(34,211,238,.2)}
+#pv-toggle:hover{background:rgba(34,211,238,.2)}
+
+/* ── Layout ── */
+#main{display:flex;height:calc(100vh - 52px);margin-top:52px}
+#sp{width:400px;min-width:320px;max-width:480px;overflow-y:auto;border-right:1px solid var(--border);background:var(--bg)}
+#pp{flex:1;overflow:hidden;background:#000;position:relative;transition:.3s}
+#pp.hidden{width:0;flex:0;overflow:hidden}
+#pp iframe{width:100%;height:100%;border:none}
+#pp-overlay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;color:var(--text2);pointer-events:none}
+#pp-overlay p{margin-top:8px;font-size:11px}
+
+/* ── Settings panel ── */
+.tab-pane{display:none;padding:16px}
+.tab-pane.active{display:block}
+.section{margin-bottom:20px}
+.section-title{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--accent);text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11px;color:var(--text2);margin-bottom:4px;font-weight:500}
+.field input[type=text],.field input[type=number],.field input[type=url],.field select,.field textarea{width:100%;padding:7px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:12px;outline:none;font-family:inherit}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent)}
+.field select option{background:var(--bg2)}
+.field textarea{resize:vertical;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.5;min-height:120px}
+
+/* Color row */
+.color-row{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.color-row label{flex:1;font-size:11px;color:var(--text2)}
+.color-row input[type=color]{width:30px;height:28px;border:1px solid var(--border);border-radius:4px;background:none;cursor:pointer;padding:2px;flex-shrink:0}
+.color-row input[type=text]{width:78px;flex-shrink:0;font-family:monospace;font-size:11px;padding:5px 6px;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--text);outline:none}
+.color-row input[type=text]:focus{border-color:var(--accent)}
+.color-group-title{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--text2);text-transform:uppercase;margin:14px 0 8px;border-left:2px solid var(--accent);padding-left:8px}
+
+/* Toggle */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(168,85,247,.06)}
+.toggle-row label{font-size:12px;color:var(--text2)}
+.toggle{position:relative;width:36px;height:20px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:rgba(255,255,255,.1);border-radius:10px;cursor:pointer;transition:.2s}
+.slider:before{content:'';position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s}
+input:checked+.slider{background:var(--accent)}
+input:checked+.slider:before{transform:translateX(16px)}
+
+/* Hint */
+.hint{font-size:10px;color:var(--text2);margin-top:3px;opacity:.7}
+.sep{border:none;border-top:1px solid var(--border);margin:14px 0}
+
+/* Loading */
+#loader{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px}
+.spin{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="spin"></div>
+  <p style="color:var(--text2);font-size:12px;">Loading SKA Theme settings…</p>
+</div>
+
+<!-- ── HEADER ── -->
+<header id="hdr">
+  <div id="logo">✦ SKA Theme Editor <small>v1.0.0</small></div>
+  <nav id="tabs">
+    <button class="tab active" onclick="switchTab('general')">General</button>
+    <button class="tab" onclick="switchTab('colors')">Colors</button>
+    <button class="tab" onclick="switchTab('layout')">Layout</button>
+    <button class="tab" onclick="switchTab('features')">Features</button>
+    <button class="tab" onclick="switchTab('css')">Custom CSS</button>
+  </nav>
+  <div id="actions">
+    <span id="status"></span>
+    <button class="btn" id="pv-toggle" onclick="togglePreview()">Hide Preview</button>
+    <button class="btn" id="save-btn" onclick="saveSettings()">Save Settings</button>
+  </div>
+</header>
+
+<!-- ── MAIN ── -->
+<div id="main">
+
+  <!-- Settings panel -->
+  <div id="sp">
+
+    <!-- ════ GENERAL ════ -->
+    <div class="tab-pane active" id="pane-general">
+
+      <div class="section">
+        <div class="section-title">Typography</div>
+        <div class="field">
+          <label>Font Family</label>
+          <select id="font_family" name="font_family" onchange="onFontChange(this.value)">
+            <option value="Inter">Inter (default)</option>
+            <option value="Nunito">Nunito</option>
+            <option value="Poppins">Poppins</option>
+            <option value="Space Grotesk">Space Grotesk</option>
+            <option value="Outfit">Outfit</option>
+            <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
+            <option value="DM Sans">DM Sans</option>
+            <option value="Quicksand">Quicksand</option>
+            <option value="Roboto">Roboto</option>
+            <option value="Ubuntu">Ubuntu</option>
+            <option value="JetBrains Mono">JetBrains Mono (monospace)</option>
+            <option value="Fira Code">Fira Code (monospace)</option>
+            <option value="system">System default</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Custom Logo</div>
+        <div class="field">
+          <label>Sidebar Logo URL</label>
+          <input type="url" id="sidebar_customlogo" name="sidebar_customlogo" placeholder="https://example.com/logo.png">
+          <p class="hint">Leave empty to use default Pterodactyl icon</p>
+        </div>
+        <div class="field">
+          <label>Auth / Login Page Logo URL</label>
+          <input type="url" id="auth_customlogo" name="auth_customlogo" placeholder="https://example.com/logo.png">
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Dashboard Background</div>
+        <div class="field">
+          <label>Background Image URL</label>
+          <input type="url" id="background_image" name="background_image" placeholder="https://example.com/bg.jpg">
+        </div>
+        <div class="field">
+          <label>Background Appearance</label>
+          <select id="background_appearance" name="background_appearance">
+            <option value="0">None</option>
+            <option value="1">Blurred</option>
+            <option value="2">Heavily Blurred</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Magic Pattern</label>
+          <select id="background_magic" name="background_magic">
+            <option value="">None</option>
+            <option value="tiles">Tiles</option>
+            <option value="cubes">Cubes</option>
+            <option value="rotated-squares">Rotated Squares</option>
+            <option value="l-shape">L-Shape</option>
+            <option value="zig-zag">Zig-Zag</option>
+            <option value="wavy-checkerboard">Wavy Checkerboard</option>
+            <option value="chevrons">Chevrons</option>
+            <option value="houndstooth">Houndstooth</option>
+            <option value="quarter-circles">Quarter Circles</option>
+            <option value="diagonal-rectangles">Diagonal Rectangles</option>
+            <option value="alternating-arc">Alternating Arc</option>
+            <option value="polka">Polka Dots</option>
+            <option value="moon">Moon</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Pattern Size (50–500)</label>
+          <input type="number" id="background_magicsize" name="background_magicsize" min="50" max="500" value="215">
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Auth / Login Background</div>
+        <div class="field">
+          <label>Background Image URL</label>
+          <input type="url" id="auth_background_image" name="auth_background_image" placeholder="https://example.com/bg.jpg">
+        </div>
+        <div class="field">
+          <label>Background Appearance</label>
+          <select id="auth_background_appearance" name="auth_background_appearance">
+            <option value="0">None</option>
+            <option value="1">Blurred</option>
+            <option value="2">Heavily Blurred</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Magic Pattern</label>
+          <select id="auth_background_magic" name="auth_background_magic">
+            <option value="">None</option>
+            <option value="tiles">Tiles</option>
+            <option value="cubes">Cubes</option>
+            <option value="rotated-squares">Rotated Squares</option>
+            <option value="zig-zag">Zig-Zag</option>
+            <option value="chevrons">Chevrons</option>
+            <option value="polka">Polka Dots</option>
+            <option value="moon">Moon</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Pattern Size (50–500)</label>
+          <input type="number" id="auth_background_magicsize" name="auth_background_magicsize" min="50" max="500" value="215">
+        </div>
+      </div>
+
+    </div><!-- /general -->
+
+    <!-- ════ COLORS ════ -->
+    <div class="tab-pane" id="pane-colors">
+
+      <div class="section">
+        <div class="section-title">Mode</div>
+        <div class="toggle-row">
+          <label>Light Mode (experimental)</label>
+          <label class="toggle"><input type="checkbox" id="dark_mode_toggle" onchange="onDarkModeToggle(this)"><span class="slider"></span></label>
+        </div>
+        <input type="hidden" id="dark_mode" name="dark_mode" value="dark">
+        <p class="hint" style="margin-top:6px">Light mode overrides dark palette with lighter values</p>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Dashboard Palette</div>
+        <div id="colors-dashboard"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Sidebar Palette</div>
+        <div id="colors-sidebar"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Auth / Login Palette</div>
+        <div id="colors-auth"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Status Colors</div>
+        <div id="colors-status"></div>
+      </div>
+
+    </div><!-- /colors -->
+
+    <!-- ════ LAYOUT ════ -->
+    <div class="tab-pane" id="pane-layout">
+
+      <div class="section">
+        <div class="section-title">Sidebar</div>
+        <div class="field">
+          <label>Sidebar Mode</label>
+          <select id="sidebar_full" name="sidebar_full">
+            <option value="0">Mini — icons only</option>
+            <option value="1">Full — labels visible</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Hover Animation</label>
+          <select id="sidebar_hover" name="sidebar_hover">
+            <option value="disabled">Disabled</option>
+            <option value="popout">Popout</option>
+            <option value="expand">Expand</option>
+          </select>
+        </div>
+        <div class="toggle-row">
+          <label>Hover tooltip</label>
+          <label class="toggle"><input type="checkbox" id="sidebar_hover_tooltip_cb" onchange="setSidebarTooltip(this)"><span class="slider"></span></label>
+        </div>
+        <input type="hidden" id="sidebar_hover_tooltip" name="sidebar_hover_tooltip" value="2">
+        <div class="toggle-row">
+          <label>Sidebar separators</label>
+          <label class="toggle"><input type="checkbox" id="sidebar_separators" name="sidebar_separators"><span class="slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <label>Always visible category buttons</label>
+          <label class="toggle"><input type="checkbox" id="sidebar_always_visible_buttons" name="sidebar_always_visible_buttons"><span class="slider"></span></label>
+        </div>
+        <div class="field" style="margin-top:10px">
+          <label>Sidebar Background</label>
+          <select id="sidebar_background" name="sidebar_background">
+            <option value="default">Default</option>
+            <option value="blurred">Blurred</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Sidebar Border Radius (0–20)</label>
+          <input type="number" id="sidebar_border_radius" name="sidebar_border_radius" min="0" max="20" value="10">
+        </div>
+        <div class="field">
+          <label>Sidebar Button Style</label>
+          <select id="sidebar_buttonstyle" name="sidebar_buttonstyle">
+            <option value="0">Default</option>
+            <option value="1">Pill</option>
+            <option value="2">Square</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Icon Scale (0.10–1.00)</label>
+          <input type="number" id="icon_scale" name="icon_scale" min="0.10" max="1" step="0.05" value="0.90">
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Page & Cards</div>
+        <div class="field">
+          <label>Page Animations</label>
+          <select id="animations" name="animations">
+            <option value="fadeup">Fade Up</option>
+            <option value="zoomout">Zoom Out</option>
+            <option value="fadein">Fade In</option>
+            <option value="disabled">Disabled</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Page Border Radius (0–20)</label>
+          <input type="number" id="border_radius" name="border_radius" min="0" max="20" value="10">
+        </div>
+        <div class="field">
+          <label>Dashboard Transparency</label>
+          <select id="dashboard_transparency" name="dashboard_transparency">
+            <option value="0">None (solid)</option>
+            <option value="1">Light (~70%)</option>
+            <option value="2">Medium (~60%)</option>
+            <option value="3">Heavy (~40%)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Server List Style</label>
+          <select id="server_list" name="server_list">
+            <option value="cards">Cards</option>
+            <option value="list">List</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Server Card Style <span style="color:var(--accent2);font-size:10px">ARIX</span></label>
+          <select id="server_card_style" name="server_card_style">
+            <option value="default">Default</option>
+            <option value="flat">Flat (minimal)</option>
+            <option value="glass">Glassmorphic</option>
+            <option value="neon">Neon glow</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Glassmorphism Intensity <span style="color:var(--accent2);font-size:10px">ARIX</span></label>
+          <select id="glass_intensity" name="glass_intensity">
+            <option value="0">Off</option>
+            <option value="1">Light (8px blur)</option>
+            <option value="2">Medium (16px blur)</option>
+            <option value="3">Heavy (24px blur)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Status Gradient Style</label>
+          <select id="statusgradient_style" name="statusgradient_style">
+            <option value="default">Default</option>
+            <option value="flat">Flat</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Icon Pack</div>
+        <div class="field">
+          <label>Icon Fallback Pack</label>
+          <select id="icon_fallback" name="icon_fallback">
+            <option value="bootstrap">Bootstrap Icons (default)</option>
+            <option value="feather">Feather Icons</option>
+            <option value="lucide">Lucide Icons</option>
+            <option value="material">Material Icons</option>
+            <option value="fontawesome">Font Awesome</option>
+            <option value="tabler">Tabler Icons</option>
+            <option value="remix-outline">Remix Outline</option>
+            <option value="remix-solid">Remix Solid</option>
+          </select>
+        </div>
+      </div>
+
+    </div><!-- /layout -->
+
+    <!-- ════ FEATURES ════ -->
+    <div class="tab-pane" id="pane-features">
+
+      <div class="section">
+        <div class="section-title">UI Toggles</div>
+        <div class="toggle-row"><label>Sidebar watermark</label><label class="toggle"><input type="checkbox" id="watermark" name="watermark"><span class="slider"></span></label></div>
+        <div class="toggle-row"><label>Auth page watermark</label><label class="toggle"><input type="checkbox" id="watermark_auth" name="watermark_auth"><span class="slider"></span></label></div>
+        <div class="toggle-row"><label>Keyboard shortcuts</label><label class="toggle"><input type="checkbox" id="keyboard_shortcuts" name="keyboard_shortcuts"><span class="slider"></span></label></div>
+        <div class="toggle-row"><label>Keybind icons</label><label class="toggle"><input type="checkbox" id="keybind_icons" name="keybind_icons"><span class="slider"></span></label></div>
+        <div class="toggle-row"><label>Server overview graphs</label><label class="toggle"><input type="checkbox" id="server_overview_graphs" name="server_overview_graphs"><span class="slider"></span></label></div>
+        <div class="toggle-row"><label>Colored power buttons</label><label class="toggle"><input type="checkbox" id="server_colored_power" name="server_colored_power"><span class="slider"></span></label></div>
+        <div class="toggle-row"><label>Page indexing (SEO)</label><label class="toggle"><input type="checkbox" id="page_indexing" name="page_indexing"><span class="slider"></span></label></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Quick Weblinks Bar <span style="color:var(--accent2);font-size:10px">ARIX</span></div>
+        <div class="toggle-row" style="margin-bottom:10px"><label>Enable weblinks bar</label><label class="toggle"><input type="checkbox" id="website_links" name="website_links"><span class="slider"></span></label></div>
+        <div class="field"><label>Support URL</label><input type="url" id="weblink_support" name="weblink_support" placeholder="https://support.yourhost.com"></div>
+        <div class="field"><label>Billing URL</label><input type="url" id="weblink_billing" name="weblink_billing" placeholder="https://billing.yourhost.com"></div>
+        <div class="field"><label>Status Page URL</label><input type="url" id="weblink_status" name="weblink_status" placeholder="https://status.yourhost.com"></div>
+        <div class="field"><label>Discord Server Handle / Invite</label><input type="text" id="weblink_social_discord" name="weblink_social_discord" placeholder="yourserver"></div>
+        <div class="field"><label>GitHub Organisation / User</label><input type="text" id="weblink_social_github" name="weblink_social_github" placeholder="yourorg"></div>
+        <div class="toggle-row"><label>Align links to the right</label><label class="toggle"><input type="checkbox" id="website_links_align" name="website_links_align"><span class="slider"></span></label></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Announcement Alert</div>
+        <div class="toggle-row" style="margin-bottom:10px"><label>Show announcement bar</label><label class="toggle"><input type="checkbox" id="alert" name="alert"><span class="slider"></span></label></div>
+        <div class="field"><label>Alert Text</label><input type="text" id="alert_text" name="alert_text" placeholder="🚀 Welcome to our panel!"></div>
+        <div class="field">
+          <label>Alert Icon</label>
+          <select id="alert_icon" name="alert_icon">
+            <option value="megaphone-fill">Megaphone (default)</option>
+            <option value="exclamation-triangle-fill">Warning</option>
+            <option value="check-circle-fill">Check</option>
+            <option value="database-fill">Database</option>
+            <option value="chat-square-text-fill">Chat</option>
+            <option value="gear-fill">Gear</option>
+            <option value="rocket-takeoff-fill">Rocket</option>
+            <option value="reception-4">Signal</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Alert Position</label>
+          <select id="alert_position" name="alert_position">
+            <option value="sticky">Sticky (follows scroll)</option>
+            <option value="static">Static (top only)</option>
+          </select>
+        </div>
+        <div class="toggle-row"><label>Dismissable by users</label><label class="toggle"><input type="checkbox" id="alert_dismiss" name="alert_dismiss"><span class="slider"></span></label></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Factory Reset</div>
+        <div class="toggle-row">
+          <label style="color:#f87171">Reset all settings to defaults on next save</label>
+          <label class="toggle"><input type="checkbox" id="reset" name="reset"><span class="slider"></span></label>
+        </div>
+      </div>
+
+    </div><!-- /features -->
+
+    <!-- ════ CUSTOM CSS ════ -->
+    <div class="tab-pane" id="pane-css">
+      <div class="section">
+        <div class="section-title">Custom CSS Injection <span style="color:var(--accent2);font-size:10px">ARIX</span></div>
+        <p class="hint" style="margin-bottom:10px">CSS is injected after all theme styles. Use with caution — admin only.</p>
+        <div class="field">
+          <textarea id="custom_css" name="custom_css" rows="20" style="min-height:300px" placeholder="/* Your custom CSS here */
+.some-element {
+  color: #a855f7;
+}"></textarea>
+        </div>
+        <button class="btn" onclick="clearCSS()" style="background:rgba(248,113,113,.15);color:#f87171;border:1px solid rgba(248,113,113,.3);font-size:11px">Clear CSS</button>
+      </div>
+    </div><!-- /css -->
+
+  </div><!-- /sp -->
+
+  <!-- Preview panel -->
+  <div id="pp">
+    <div id="pp-overlay">
+      <div style="font-size:24px;opacity:.3">⬡</div>
+      <p>Loading preview…</p>
+    </div>
+    <iframe id="pf" src="/" onload="onIframeLoad()"></iframe>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// ════ State ════════════════════════════════════════════════════════════════
+let S = {}; // current settings
+let previewOpen = true;
+
+// ════ Init ═════════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  buildColorPickers();
+  await loadSettings();
+  document.getElementById('loader').style.display = 'none';
+});
+
+// ════ Color picker builder ══════════════════════════════════════════════════
+const COLOR_DEFS = {
+  dashboard: [
+    ['palette_dashboard_1','Text primary'],
+    ['palette_dashboard_2','Text secondary'],
+    ['palette_dashboard_3','Panel bg 1'],
+    ['palette_dashboard_4','Panel bg 2'],
+    ['palette_dashboard_5','Panel bg 3'],
+    ['palette_dashboard_6','Panel bg 4'],
+    ['palette_dashboard_7','Page background'],
+    ['palette_dashboard_8','Accent / button'],
+    ['palette_dashboard_9','Accent hover'],
+  ],
+  sidebar: [
+    ['palette_sidebar_1','Text primary'],
+    ['palette_sidebar_2','Icon active'],
+    ['palette_sidebar_3','BG layer 1'],
+    ['palette_sidebar_4','BG layer 2'],
+    ['palette_sidebar_5','BG layer 3'],
+    ['palette_sidebar_6','BG layer 4'],
+    ['palette_sidebar_7','Deep background'],
+    ['palette_sidebar_8','Button / highlight'],
+  ],
+  auth: [
+    ['palette_auth_1','Page background'],
+    ['palette_auth_2','Card background'],
+    ['palette_auth_3','Input background'],
+    ['palette_auth_4','Button'],
+    ['palette_auth_5','Error color'],
+    ['palette_auth_6','Link color'],
+    ['palette_auth_7','Label text'],
+    ['palette_auth_8','Input text'],
+  ],
+  status: [
+    ['palette_status_offline','Offline'],
+    ['palette_status_error','Error'],
+    ['palette_status_starting','Starting'],
+    ['palette_status_online','Online'],
+  ]
+};
+
+function buildColorPickers() {
+  for (const [group, defs] of Object.entries(COLOR_DEFS)) {
+    const el = document.getElementById('colors-' + group);
+    if (!el) continue;
+    defs.forEach(([key, label]) => {
+      el.innerHTML += `
+        <div class="color-row">
+          <label>${label}</label>
+          <input type="color" id="${key}" value="#000000" oninput="onColorPicker('${key}',this.value)">
+          <input type="text" id="${key}_t" value="#000000" maxlength="7" placeholder="#000000"
+            oninput="onColorText('${key}',this.value)">
+        </div>`;
+    });
+  }
+}
+
+function onColorPicker(key, val) {
+  const t = document.getElementById(key + '_t');
+  if (t) t.value = val;
+  pushPreviewVar(key, val);
+}
+
+function onColorText(key, val) {
+  if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+    const c = document.getElementById(key);
+    if (c) c.value = val;
+    pushPreviewVar(key, val);
+  }
+}
+
+// CSS var mapping
+const CSS_MAP = {
+  palette_dashboard_1: '--pagePrimary',
+  palette_dashboard_2: '--pagePrimaryHover',
+  palette_dashboard_3: '--pageSecondary',
+  palette_dashboard_4: '--pageSecondaryHover',
+  palette_dashboard_5: '--pageSecondaryActive',
+  palette_dashboard_6: '--pageSecondarySelected',
+  palette_dashboard_7: '--pageBackground',
+  palette_dashboard_8: '--pageButtonDefault',
+  palette_dashboard_9: '--pageButtonHover',
+  palette_sidebar_1: '--sidebarPrimary',
+  palette_sidebar_2: '--sidebarPrimaryHover',
+  palette_sidebar_3: '--sidebarSecondary',
+  palette_sidebar_4: '--sidebarSecondaryHover',
+  palette_sidebar_5: '--sidebarSecondaryActive',
+  palette_sidebar_6: '--sidebarSecondarySelected',
+  palette_sidebar_7: '--sidebarBackground',
+  palette_sidebar_8: '--sidebarButtonActive',
+  palette_status_offline: '--statusOffline',
+  palette_status_error: '--statusError',
+  palette_status_starting: '--statusStarting',
+  palette_status_online: '--statusOnline',
+};
+
+function pushPreviewVar(key, val) {
+  const cssVar = CSS_MAP[key];
+  if (!cssVar) return;
+  try {
+    const doc = document.getElementById('pf').contentDocument;
+    let s = doc.getElementById('ska-editor-live');
+    if (!s) { s = doc.createElement('style'); s.id = 'ska-editor-live'; doc.head.appendChild(s); }
+    // rebuild all
+    const vars = Object.entries(CSS_MAP).map(([k, v]) => {
+      const el = document.getElementById(k);
+      return el ? `${v}:${el.value}` : '';
+    }).filter(Boolean).join(';');
+    s.textContent = `:root{${vars}}`;
+    document.getElementById('pp-overlay').style.display = 'none';
+  } catch(e) {}
+}
+
+// ════ Settings load ══════════════════════════════════════════════════════════
+async function loadSettings() {
+  try {
+    const r = await fetch('/admin/extensions/skatheme', {
+      headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    S = await r.json();
+    applySettings(S);
+    setStatus('Settings loaded', 'ok', 2000);
+  } catch(e) {
+    setStatus('Could not load settings — using defaults', 'err', 4000);
+  }
+}
+
+function applySettings(d) {
+  // Text / select / number / url inputs
+  const fields = ['font_family','sidebar_customlogo','auth_customlogo',
+    'background_image','background_appearance','background_magic','background_magicsize',
+    'auth_background_image','auth_background_appearance','auth_background_magic','auth_background_magicsize',
+    'dark_mode','sidebar_full','sidebar_hover','sidebar_background','sidebar_border_radius',
+    'sidebar_buttonstyle','icon_scale','animations','border_radius','dashboard_transparency',
+    'server_list','server_card_style','glass_intensity','statusgradient_style','icon_fallback',
+    'weblink_support','weblink_billing','weblink_status','weblink_social_discord','weblink_social_github',
+    'alert_text','alert_icon','alert_position','custom_css'];
+  fields.forEach(k => {
+    const el = document.getElementById(k);
+    if (el && d[k] !== undefined) el.value = d[k] ?? '';
+  });
+
+  // Dark mode toggle
+  const dm = document.getElementById('dark_mode_toggle');
+  if (dm) dm.checked = (d.dark_mode === 'light');
+
+  // Hover tooltip checkbox
+  const htt = document.getElementById('sidebar_hover_tooltip_cb');
+  if (htt) {
+    htt.checked = (d.sidebar_hover_tooltip === '1' || d.sidebar_hover_tooltip === '2');
+    document.getElementById('sidebar_hover_tooltip').value = d.sidebar_hover_tooltip ?? '2';
+  }
+
+  // Checkboxes
+  const checks = ['watermark','watermark_auth','keyboard_shortcuts','keybind_icons',
+    'server_overview_graphs','server_colored_power','sidebar_separators',
+    'sidebar_always_visible_buttons','page_indexing','website_links','website_links_align',
+    'alert','alert_dismiss','reset'];
+  checks.forEach(k => {
+    const el = document.getElementById(k);
+    if (el) el.checked = (d[k] === '1' || d[k] === 1 || d[k] === true);
+  });
+
+  // Colors
+  const allColorKeys = Object.keys(CSS_MAP).concat(
+    Object.values(COLOR_DEFS).flat().map(([k])=>k).filter(k=>!CSS_MAP[k])
+  );
+  [...Object.values(COLOR_DEFS).flat().map(([k])=>k)].forEach(k => {
+    const val = d[k];
+    if (!val) return;
+    const picker = document.getElementById(k);
+    const text   = document.getElementById(k + '_t');
+    if (picker) picker.value = val;
+    if (text)   text.value   = val;
+  });
+}
+
+// ════ Settings save ══════════════════════════════════════════════════════════
+async function saveSettings() {
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  setStatus('Saving…', '');
+
+  const data = collectSettings();
+  const params = new URLSearchParams(data);
+
+  try {
+    const r = await fetch('/admin/extensions/skatheme', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+        'X-XSRF-TOKEN': getCSRF(),
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+      body: params,
+    });
+    const json = await r.json().catch(() => ({}));
+    if (r.ok) {
+      setStatus('✓ Saved!', 'ok', 3000);
+      reloadPreview();
+    } else {
+      setStatus('Error: ' + (json.message || r.status), 'err', 5000);
+    }
+  } catch(e) {
+    setStatus('Network error', 'err', 4000);
+  }
+  btn.disabled = false;
+}
+
+function collectSettings() {
+  const d = { _token: getCSRFToken() };
+
+  // All text/select/url/number/textarea inputs
+  document.querySelectorAll('#sp input[name]:not([type=checkbox]), #sp select[name], #sp textarea[name]').forEach(el => {
+    if (el.id && el.id.endsWith('_t')) return; // skip helper text inputs for color pickers
+    d[el.name] = el.value;
+  });
+
+  // Checkboxes — must explicitly send '0' for unchecked
+  document.querySelectorAll('#sp input[type=checkbox][name]').forEach(el => {
+    d[el.name] = el.checked ? '1' : '0';
+  });
+
+  // Color pickers (name comes from id since inputs in color rows have id not name)
+  document.querySelectorAll('#sp input[type=color]').forEach(el => {
+    d[el.id] = el.value;
+  });
+
+  return d;
+}
+
+// ════ Helpers ══════════════════════════════════════════════════════════════
+function getCSRF() {
+  const raw = document.cookie.split(';').map(c=>c.trim()).find(c=>c.startsWith('XSRF-TOKEN='));
+  return raw ? decodeURIComponent(raw.split('=')[1]) : '';
+}
+function getCSRFToken() {
+  const m = document.cookie.match(/XSRF-TOKEN=([^;]+)/);
+  return m ? decodeURIComponent(m[1]) : '';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((b,i)=>{
+    const tabs = ['general','colors','layout','features','css'];
+    b.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-pane').forEach(p=>{
+    p.classList.toggle('active', p.id === 'pane-' + name);
+  });
+}
+
+function togglePreview() {
+  previewOpen = !previewOpen;
+  document.getElementById('pp').classList.toggle('hidden', !previewOpen);
+  document.getElementById('pv-toggle').textContent = previewOpen ? 'Hide Preview' : 'Show Preview';
+}
+
+function reloadPreview() {
+  const pf = document.getElementById('pf');
+  pf.src = pf.src;
+}
+
+function onIframeLoad() {
+  document.getElementById('pp-overlay').style.opacity = '0';
+  setTimeout(()=>{ document.getElementById('pp-overlay').style.display = 'none'; }, 400);
+}
+
+function onFontChange(font) {
+  if (font && font !== 'system') {
+    const url = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(font)}:wght@400;600&display=swap`;
+    if (!document.querySelector(`link[href*="${font.replace(/ /g,'+')}"]`)) {
+      const l = document.createElement('link');
+      l.rel = 'stylesheet'; l.href = url;
+      document.head.appendChild(l);
+    }
+    document.body.style.fontFamily = `'${font}', sans-serif`;
+  }
+}
+
+function onDarkModeToggle(cb) {
+  document.getElementById('dark_mode').value = cb.checked ? 'light' : 'dark';
+}
+
+function setSidebarTooltip(cb) {
+  document.getElementById('sidebar_hover_tooltip').value = cb.checked ? '2' : '0';
+}
+
+function clearCSS() {
+  document.getElementById('custom_css').value = '';
+}
+
+function setStatus(msg, cls, clearMs) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = cls;
+  if (clearMs) setTimeout(() => { el.textContent = ''; el.className = ''; }, clearMs);
+}
+</script>
+</body>
+</html>

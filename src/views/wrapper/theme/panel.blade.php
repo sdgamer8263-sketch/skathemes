@@ -771,3 +771,65 @@
     line-height: 1.25rem !important;
   }
 </style>
+
+{{-- ── ARIX: Google Font ──────────────────────────────────────────────── --}}
+@if(!empty($s_font_family) && $s_font_family !== 'system')
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family={{ urlencode(str_replace(' ', '+', $s_font_family)) }}:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+@endif
+
+{{-- ── ARIX: Glassmorphism ─────────────────────────────────────────────── --}}
+@if(isset($s_glass_intensity) && $s_glass_intensity !== '0')
+<style id="ska-glass">
+  [class*="ServerRow___StyledDiv"],
+  [class*="Container-sc"],
+  [class*="SubNavigation"],
+  .bg-gray-700, .bg-neutral-700, .bg-gray-800, .bg-neutral-800 {
+    backdrop-filter: blur(var(--ska-glass-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--ska-glass-blur)) !important;
+    background-color: rgba(13, 13, 38, var(--ska-glass-alpha)) !important;
+  }
+</style>
+@endif
+
+{{-- ── ARIX: Server card style ─────────────────────────────────────────── --}}
+@if(isset($s_server_card_style) && $s_server_card_style !== 'default')
+<style id="ska-cards">
+@if($s_server_card_style === 'neon')
+  [class*="ServerRow___StyledDiv"],
+  [class*="Container-sc"] {
+    border: 1px solid rgba(168,85,247,.35) !important;
+    box-shadow: 0 0 14px rgba(168,85,247,.15), inset 0 0 10px rgba(168,85,247,.04) !important;
+    transition: box-shadow .2s, border-color .2s !important;
+  }
+  [class*="ServerRow___StyledDiv"]:hover,
+  [class*="Container-sc"]:hover {
+    border-color: rgba(168,85,247,.6) !important;
+    box-shadow: 0 0 22px rgba(168,85,247,.28), inset 0 0 14px rgba(168,85,247,.07) !important;
+  }
+@elseif($s_server_card_style === 'flat')
+  [class*="ServerRow___StyledDiv"],
+  [class*="Container-sc"] {
+    border: none !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid rgba(255,255,255,.05) !important;
+  }
+@elseif($s_server_card_style === 'glass')
+  [class*="ServerRow___StyledDiv"],
+  [class*="Container-sc"] {
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    background: rgba(168,85,247,.07) !important;
+    border: 1px solid rgba(168,85,247,.18) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,.3) !important;
+  }
+@endif
+</style>
+@endif
+
+{{-- ── ARIX: Custom CSS injection ──────────────────────────────────────── --}}
+@if(!empty($s_custom_css))
+<style id="ska-custom">{!! $s_custom_css !!}</style>
+@endif
