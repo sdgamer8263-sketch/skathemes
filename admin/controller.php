@@ -155,7 +155,7 @@ class skathemeExtensionController extends Controller
       $this->blueprint->dbSet('skatheme', $key, $value);
     }
     return redirect('/admin/extensions/skatheme')
-      ->with('success', 'SKA Theme settings saved!');
+      ->with('ska_success', 'SKA Theme settings saved!');
   }
 }
 
