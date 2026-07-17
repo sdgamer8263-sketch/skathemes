@@ -139,38 +139,18 @@ class skathemeExtensionController extends Controller
   /** GET /admin/extensions/skatheme */
   public function index(Request $request): mixed
   {
-    // Set defaults for any missing keys; apply reset if requested
-    $reset = $this->blueprint->dbGet('skatheme', 'reset');
-
-    foreach ($this->defaults as $key => $default) {
-      $current = $this->blueprint->dbGet('skatheme', $key);
-      if ($current === '' || $current === null || $reset === '1') {
-        $this->blueprint->dbSet('skatheme', $key, $default);
-      }
-    }
-
-    // Mark extension as initialised
-    $init = $this->blueprint->dbGet('skatheme', 'init');
-    if ($init !== '{version}' || $reset === '1') {
-      $this->blueprint->dbSet('skatheme', 'init', '{version}');
-    }
-    if ($reset === '1') {
-      $this->blueprint->dbSet('skatheme', 'reset', '0');
-    }
-
-    // Read all values
-    $data = [];
-    foreach (array_keys($this->defaults) as $key) {
-      $data[$key] = $this->blueprint->dbGet('skatheme', $key) ?? $this->defaults[$key];
-    }
-
-    // AJAX / JSON request → return data for editor
+    // AJAX / JSON request → return all settings for the visual editor
     if ($request->wantsJson() || $request->ajax()) {
+      $data = [];
+      foreach (array_keys($this->defaults) as $key) {
+        $val = $this->blueprint->dbGet('skatheme', $key);
+        $data[$key] = ($val !== null && $val !== '') ? $val : ($this->defaults[$key] ?? '');
+      }
       return response()->json($data);
     }
 
-    // Normal browser request → redirect to visual editor
-    return redirect('/extensions/skatheme/editor/');
+    // Normal browser GET → open the visual editor
+    return redirect('/extensions/skatheme/editor/index.html');
   }
 
   /** POST /admin/extensions/skatheme */
@@ -199,26 +179,26 @@ class SkathemeSettingsFormRequest extends AdminFormRequest
   {
     return [
       // Sidebar navigation icons
-      'sidebar_home'                   => 'nullable|string|url:http,https',
-      'sidebar_admin'                  => 'nullable|string|url:http,https',
-      'sidebar_account'                => 'nullable|string|url:http,https',
-      'sidebar_logout'                 => 'nullable|string|url:http,https',
-      'sidebar_server_terminal'        => 'nullable|string|url:http,https',
-      'sidebar_server_files'           => 'nullable|string|url:http,https',
-      'sidebar_server_databases'       => 'nullable|string|url:http,https',
-      'sidebar_server_schedules'       => 'nullable|string|url:http,https',
-      'sidebar_server_users'           => 'nullable|string|url:http,https',
-      'sidebar_server_backups'         => 'nullable|string|url:http,https',
-      'sidebar_server_network'         => 'nullable|string|url:http,https',
-      'sidebar_server_startup'         => 'nullable|string|url:http,https',
-      'sidebar_server_settings'        => 'nullable|string|url:http,https',
-      'sidebar_server_activity'        => 'nullable|string|url:http,https',
-      'sidebar_server_more'            => 'nullable|string|url:http,https',
-      'sidebar_account_account'        => 'nullable|string|url:http,https',
-      'sidebar_account_api'            => 'nullable|string|url:http,https',
-      'sidebar_account_ssh'            => 'nullable|string|url:http,https',
-      'sidebar_account_activity'       => 'nullable|string|url:http,https',
-      'sidebar_account_more'           => 'nullable|string|url:http,https',
+      'sidebar_home'                   => 'nullable|string',
+      'sidebar_admin'                  => 'nullable|string',
+      'sidebar_account'                => 'nullable|string',
+      'sidebar_logout'                 => 'nullable|string',
+      'sidebar_server_terminal'        => 'nullable|string',
+      'sidebar_server_files'           => 'nullable|string',
+      'sidebar_server_databases'       => 'nullable|string',
+      'sidebar_server_schedules'       => 'nullable|string',
+      'sidebar_server_users'           => 'nullable|string',
+      'sidebar_server_backups'         => 'nullable|string',
+      'sidebar_server_network'         => 'nullable|string',
+      'sidebar_server_startup'         => 'nullable|string',
+      'sidebar_server_settings'        => 'nullable|string',
+      'sidebar_server_activity'        => 'nullable|string',
+      'sidebar_server_more'            => 'nullable|string',
+      'sidebar_account_account'        => 'nullable|string',
+      'sidebar_account_api'            => 'nullable|string',
+      'sidebar_account_ssh'            => 'nullable|string',
+      'sidebar_account_activity'       => 'nullable|string',
+      'sidebar_account_more'           => 'nullable|string',
       // Sidebar style
       'icon_scale'                     => 'numeric|between:0.10,1',
       'sidebar_full'                   => 'boolean',
@@ -230,14 +210,14 @@ class SkathemeSettingsFormRequest extends AdminFormRequest
       'sidebar_border_radius'          => 'numeric|between:0,20',
       'sidebar_background'             => 'string|in:default,blurred',
       // Custom logos
-      'sidebar_customlogo'             => 'nullable|string|url:http,https',
-      'auth_customlogo'                => 'nullable|string|url:http,https',
+      'sidebar_customlogo'             => 'nullable|string',
+      'auth_customlogo'                => 'nullable|string',
       // Background
-      'background_image'               => 'nullable|string|url:http,https',
+      'background_image'               => 'nullable|string',
       'background_appearance'          => 'numeric|between:0,2',
       'background_magic'               => 'nullable|string',
       'background_magicsize'           => 'numeric|between:50,500',
-      'auth_background_image'          => 'nullable|string|url:http,https',
+      'auth_background_image'          => 'nullable|string',
       'auth_background_appearance'     => 'numeric|between:0,2',
       'auth_background_magic'          => 'nullable|string',
       'auth_background_magicsize'      => 'numeric|between:50,500',
@@ -287,9 +267,9 @@ class SkathemeSettingsFormRequest extends AdminFormRequest
       'icon_fallback'                  => 'nullable|string',
       // Weblinks
       'website_links'                  => 'boolean',
-      'weblink_support'                => 'nullable|string|url:http,https',
-      'weblink_billing'                => 'nullable|string|url:http,https',
-      'weblink_status'                 => 'nullable|string|url:http,https',
+      'weblink_support'                => 'nullable|string',
+      'weblink_billing'                => 'nullable|string',
+      'weblink_status'                 => 'nullable|string',
       'weblink_social_discord'         => 'nullable|string',
       'weblink_social_github'          => 'nullable|string',
       'website_links_align'            => 'boolean',
